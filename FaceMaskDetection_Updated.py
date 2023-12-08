@@ -45,11 +45,11 @@ while cap.isOpened():
         mask, nomask = model.predict(face_input).squeeze()
 
         if mask > nomask:
-            color = (0, 255, 0)
-            label = 'Mask %d%%' % (mask * 100)
-        else:
             color = (0, 0, 255)
-            label = 'No Mask %d%%' % (nomask * 100)
+            label = 'No Mask %d%%' % (100 - (nomask * 100))
+        else:
+            color = (0, 255, 0)
+            label = 'Mask %d%%' % (100 - (mask * 100))
 
         cv2.rectangle(result_img, pt1=(x1, y1), pt2=(x2, y2), thickness=1, color=color, lineType=cv2.LINE_AA)
         cv2.putText(result_img, text=label, org=(x1, y1 - 10), fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=0.1,
